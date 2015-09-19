@@ -34,7 +34,7 @@
         <record model="ir.action.act_window" id="act_cms_menuitems_tree">
             <field name="name">CMS Menuitems</field>
             <field name="res_model">nereid.cms.menuitem</field>
-            <field name="domain">[('parent', '=', None)]</field>
+            <field name="domain" eval="[('parent', '=', None)]" pyson="1"/>
         </record>
         <record model="ir.action.act_window.view" id="act_cms_menuitems_tree_view1">
             <field name="sequence" eval="10"/>
@@ -143,19 +143,19 @@
 	<record model="ir.action.act_window.domain" id="act_cms_articles_draft">
             <field name="name">Draft</field>
             <field name="sequence" eval="10"/>
-            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="domain" eval="[('state', '=', 'draft')]" pyson="1"/>
             <field name="act_window" ref="action_cms_articles"/>
       	</record>
     	<record model="ir.action.act_window.domain" id="act_cms_articles_published">
             <field name="name">Published</field>
             <field name="sequence" eval="20"/>
-            <field name="domain">[('state', '=', 'published')]</field>
+            <field name="domain" eval="[('state', '=', 'published')]" pyson="1"/>
             <field name="act_window" ref="action_cms_articles"/>
       	</record>
       	<record model="ir.action.act_window.domain" id="act_cms_articles_archived">
             <field name="name">Archived</field>
             <field name="sequence" eval="30"/>
-            <field name="domain">[('state', '=', 'archived')]</field>
+            <field name="domain" eval="[('state', '=', 'archived')]" pyson="1"/>
             <field name="act_window" ref="action_cms_articles"/>
         </record>
         <record model="ir.action.act_window.view" 
@@ -253,7 +253,7 @@
 
         <!-- Model Access -->
         <record model="ir.model.access" id="access_menuitems_nereid_admin">
-            <field name="model" 
+            <field name="model"
                 search="[('model', '=', 'nereid.cms.menuitem')]"/>
             <field name="group" ref="nereid.group_nereid_admin"/>
             <field name="perm_read" eval="True"/>
@@ -261,8 +261,17 @@
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="True"/>
         </record>
+
+        <record model="ir.model.access" id="access_menuitems_nereid_non_group">
+            <field name="model"
+                search="[('model', '=', 'nereid.cms.menuitem')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
         <record model="ir.model.access" id="access_article_nereid_admin">
-            <field name="model" 
+            <field name="model"
                 search="[('model', '=', 'nereid.cms.article')]"/>
             <field name="group" ref="nereid.group_nereid_admin"/>
             <field name="perm_read" eval="True"/>
@@ -270,14 +279,30 @@
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="True"/>
         </record>
+        <record model="ir.model.access" id="access_article_nereid_non_group">
+            <field name="model"
+                search="[('model', '=', 'nereid.cms.article')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
         <record model="ir.model.access" id="access_banner_nereid_admin">
-            <field name="model" 
+            <field name="model"
                 search="[('model', '=', 'nereid.cms.banner')]"/>
             <field name="group" ref="nereid.group_nereid_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.model.access" id="access_banner_nereid_non_group">
+            <field name="model"
+                search="[('model', '=', 'nereid.cms.banner')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
         </record>
 
     </data>
