@@ -378,6 +378,15 @@ class Banner(Workflow, ModelSQL, ModelView):
         cursor.execute(*query)
 
     @classmethod
+    def view_attributes(cls):
+        return super(Banner, cls).view_attributes() + [
+            ('//page[@id="image"]', 'states', {
+                'invisible': Eval('type') == 'custom_code'
+            }), ('//page[@id="custom_code"]', 'states', {
+                'invisible': Eval('type') != 'custom_code'
+            })]
+
+    @classmethod
     def __setup__(cls):
         super(Banner, cls).__setup__()
         cls._order.insert(0, ('sequence', 'ASC'))
@@ -513,10 +522,8 @@ class ArticleCategory(ModelSQL, ModelView, CMSMenuItemMixin):
 
     @fields.depends('title', 'unique_name')
     def on_change_title(self):
-        res = {}
         if self.title and not self.unique_name:
-            res['unique_name'] = slugify(self.title)
-        return res
+            self.unique_name = slugify(self.title)
 
     @staticmethod
     def default_articles_per_page():
