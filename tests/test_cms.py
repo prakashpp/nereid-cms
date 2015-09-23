@@ -8,14 +8,17 @@
 import unittest
 
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import POOL, USER, DB_NAME, CONTEXT, \
-    test_view, test_depends
+from trytond.tests.test_tryton import (
+    POOL, USER, DB_NAME, CONTEXT, ModuleTestCase
+)
 from nereid.testing import NereidTestCase
 from trytond.transaction import Transaction
 
 
-class TestCMS(NereidTestCase):
+class TestCMS(NereidTestCase, ModuleTestCase):
     """Test CMS"""
+
+    module = 'nereid_cms'
 
     def setUp(self):
         trytond.tests.test_tryton.install_module('nereid_cms')
@@ -122,18 +125,6 @@ class TestCMS(NereidTestCase):
             'sequence': 10,
             'categories': [('add', [self.article_categ.id])],
         }])
-
-    def test0005views(self):
-        '''
-        Test views.
-        '''
-        test_view('nereid_cms')
-
-    def test0006depends(self):
-        '''
-        Test depends.
-        '''
-        test_depends()
 
     def test_0090_article_states(self):
         """All articles in published state.
@@ -474,7 +465,7 @@ def suite():
     "CMS test suite"
     test_suite = unittest.TestSuite()
     test_suite.addTests(
-        unittest.TestLoader().loadTestsFromTestCase(TestCMS)
+        unittest.TestLoader().loadTestsFromTestCase(TestCMS),
     )
     return test_suite
 
