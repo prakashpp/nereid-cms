@@ -198,7 +198,10 @@ class MenuItem(ModelSQL, ModelView, CMSMenuItemMixin):
 
         if self.type_ == 'record':
             res['record'] = self.record
-            res['link'] = self.record.get_absolute_url()
+            if has_request_context():
+                res['link'] = self.record.get_absolute_url()
+            else:
+                res['link'] = None
             # Fetch record's menu item with depth 0, as childrens are not
             # needed. This allow downstream modules to add new keys to menu
             # item based on records. Like adding an image to article menu item.
